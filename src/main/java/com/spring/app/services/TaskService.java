@@ -15,4 +15,13 @@ public class TaskService{
 	public Task addTask(Task task) {
 		return taskRepository.save(task);
 	}
+	
+	public Task findTaskById(int id) {
+		return taskRepository.findById(id).get();
+	}
+	
+	public String deleteTask(int id) {
+		this.taskRepository.deleteById(id);
+		return "Asignatura eliminada";
+	}
 }

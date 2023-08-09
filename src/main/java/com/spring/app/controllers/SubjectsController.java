@@ -39,6 +39,18 @@ public class SubjectsController {
 		return this.subjectsService.addSubject(subject);
 	}
 	
+	@PutMapping("/{id}")
+	public Subject modifySubject(@RequestBody Subject newSubject, @PathVariable int id){
+		Subject subject = this.subjectsService.getSubjectById(id);
+		subject.setSubject_name(newSubject.getSubject_name());
+		return this.subjectsService.addSubject(subject);
+	}
+	
+	@DeleteMapping("/{id}")
+	public String deleteSubject(@PathVariable int id) {
+		return this.subjectsService.deleteSubject(id);
+	}
+	
 	@PostMapping("/task/{id}")
 	public Task addTask(@RequestBody Task task,@PathVariable int id) {
 		Subject subject = subjectsService.getSubjectById(id);
@@ -52,16 +64,20 @@ public class SubjectsController {
 		return subject.getTasks();
 	}
 	
-	@PutMapping("/{id}")
-	public Subject modifySubject(@RequestBody Subject newSubject, @PathVariable int id){
-		Subject subject = this.subjectsService.getSubjectById(id);
-		subject.setSubject_name(newSubject.getSubject_name());
-		return this.subjectsService.addSubject(subject);
+	@PutMapping("/task/{id}")
+	public Task modifyTask(@PathVariable int id, @RequestBody Task newTask) {
+		Task task = this.taskService.findTaskById(id);
+		task.setTask_name(newTask.getTask_name());
+		task.setTask_description(newTask.getTask_description());
+		task.setLimit_date(newTask.getLimit_date());
+		return this.taskService.addTask(task);
 	}
 	
-	@DeleteMapping("/{id}")
-	public String deleteSubject(@PathVariable int id) {
-		return this.subjectsService.deleteSubject(id);
+	@DeleteMapping("/task/{id}")
+	public String deleteTask(@PathVariable int id) {
+		return this.taskService.deleteTask(id);
 	}
+	
+	
 	
 }
