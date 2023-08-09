@@ -3,9 +3,11 @@ package com.spring.app.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,11 +32,6 @@ public class SubjectsController {
 	@Autowired
 	private TaskService taskService;
 	
-	@GetMapping("/all")
-	public List<Subject> getAllSubjects(){
-		return this.subjectsService.getSubjects();
-	}
-	
 	@PostMapping("/{id}")
 	public Subject addSubject(@RequestBody Subject subject, @PathVariable int id) {
 		User user = userService.getUserById(id);
@@ -53,6 +50,18 @@ public class SubjectsController {
 	public List<Task> getTasks(@PathVariable int id){
 		Subject subject = subjectsService.getSubjectById(id);
 		return subject.getTasks();
+	}
+	
+	@PutMapping("/{id}")
+	public Subject modifySubject(@RequestBody Subject newSubject, @PathVariable int id){
+		Subject subject = this.subjectsService.getSubjectById(id);
+		subject.setSubject_name(newSubject.getSubject_name());
+		return this.subjectsService.addSubject(subject);
+	}
+	
+	@DeleteMapping("/{id}")
+	public String deleteSubject(@PathVariable int id) {
+		return this.subjectsService.deleteSubject(id);
 	}
 	
 }

@@ -23,4 +23,9 @@ public class SubjectsService {
 	public Subject getSubjectById(int id) {
 		return subjectsRepository.findById(id).get();
 	}
+	
+	public String deleteSubject(int id) {
+		this.subjectsRepository.deleteById(id);
+		return "Asignatura eliminada";
+	}
 }
